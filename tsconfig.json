@@ -4,7 +4,8 @@
 
     "module": "es6",                               
     "rootDir": "./", 
-    "outDir": "./js",                                
+    "outDir": "./js",  
+    "lib": ["es2017", "dom"],                              
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
