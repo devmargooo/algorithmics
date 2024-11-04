@@ -3,6 +3,10 @@ class BinaryHeap {
 
     constructor(arr: number[]) {
         this.heap = arr;
+        this.heapifyAll();
+    }
+
+    private heapifyAll() {
         for (let i = 0; i < this.getHeapSize() / 2; i++) {
             this.heapify(i);
         }
@@ -68,6 +72,14 @@ class BinaryHeap {
         return tree;
     }
 
+    private getParentIndex(index: number) {
+        if (!index) {
+            return null;
+        }
+
+        return Math.floor((index - 1) / 2);
+    }
+
     public heapify(index: number = 0) {
         const left = this.getLeftChildIndex(index);
         const right = this.getRightChildIndex(index);
@@ -114,15 +126,21 @@ class BinaryHeap {
         }
     }
 
-    private getParentIndex(index: number) {
-        if (!index) {
+    public getMax() {
+        if (!this.heap.length) {
             return null;
         }
 
-        return Math.floor((index - 1) / 2);
+        const result = this.heap.shift();
+        this.heapifyAll();
+        return result;
     }
 }
 
 const heap = new BinaryHeap([9, 11, 20, 15, 16]);
-heap.add(100);
+const max = heap.getMax();
+console.log("max: ", max);
+heap.print();
+const max2 = heap.getMax();
+console.log("max2: ", max2);
 heap.print();
