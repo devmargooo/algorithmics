@@ -8,6 +8,7 @@ class BinaryHeap {
 
     private heapifyAll() {
         for (let i = 0; i < this.getHeapSize() / 2; i++) {
+
             this.heapify(i);
         }
     }
@@ -90,7 +91,7 @@ class BinaryHeap {
             largest = left;
         }
         
-        if (this.heap[right] > this.heap[index]) {
+        if (this.heap[right] > this.heap[largest]) {
             largest = right;
         }
 
@@ -137,10 +138,5 @@ class BinaryHeap {
     }
 }
 
-const heap = new BinaryHeap([9, 11, 20, 15, 16]);
-const max = heap.getMax();
-console.log("max: ", max);
-heap.print();
-const max2 = heap.getMax();
-console.log("max2: ", max2);
+const heap = new BinaryHeap([9, 17, 15]);
 heap.print();
