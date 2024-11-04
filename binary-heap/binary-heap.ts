@@ -3,7 +3,6 @@ class BinaryHeap {
 
     constructor(arr: number[]) {
         this.heap = arr;
-        this.print();
         for (let i = 0; i < this.getHeapSize() / 2; i++) {
             this.heapify(i);
         }
@@ -102,7 +101,28 @@ class BinaryHeap {
             console.log(print_string);
         }
     }
+
+    public add(value: number) {
+        let index = this.heap.length;
+        this.heap[index] = value;
+        let parent_index = this.getParentIndex(index);
+        
+        while (parent_index !== null && this.heap[parent_index] < this.heap[index]) {
+            this.swap(index, parent_index);
+            index = parent_index;
+            parent_index = this.getParentIndex(index);
+        }
+    }
+
+    private getParentIndex(index: number) {
+        if (!index) {
+            return null;
+        }
+
+        return Math.floor((index - 1) / 2);
+    }
 }
 
 const heap = new BinaryHeap([9, 11, 20, 15, 16]);
+heap.add(100);
 heap.print();
