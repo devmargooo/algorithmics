@@ -1,5 +1,13 @@
 class BinaryHeap {
-    private heap = [20, 11, 15, 6, 9];
+    private heap:number[];
+
+    constructor(arr: number[]) {
+        this.heap = arr;
+        this.print();
+        for (let i = 0; i < this.getHeapSize() / 2; i++) {
+            this.heapify(i);
+        }
+    }
 
     private getLevel(index: number) {
         return Math.floor(Math.log2(index))
@@ -12,8 +20,32 @@ class BinaryHeap {
         }
     }
 
-    public getPrintTree() {
-        const height = this.getLevel(this.heap.length);
+    private getLeftChildIndex(parent_index: number): number {
+        return 2 * parent_index + 1;
+    }
+
+    private getRightChildIndex(parent_index: number): number {
+        return 2 * parent_index + 2;
+    }
+
+    private swap(index1: number, index2: number): void {
+        [this.heap[index1], this.heap[index2]] = [this.heap[index2], this.heap[index1]];
+    }
+
+    private getSpace(length: number): string {
+        if (!length) {
+            return ''
+        }
+
+        return new Array(length).fill(' ').join('');
+    }
+
+    private getHeapSize() {
+        return this.heap.length;
+    }
+
+    private getPrintTree() {
+        const height = this.getLevel(this.getHeapSize());
         const tree = [[this.getNode(0)]];
 
         for (let i = 1; i < height + 1; i++) {
@@ -24,9 +56,9 @@ class BinaryHeap {
                 if (!parent.value) {
                     continue;
                 }
-                const left = this.getNode(parent.index * 2 + 1);
+                const left = this.getNode(this.getLeftChildIndex(parent.index));
                 new_line.push(left);
-                const right = this.getNode(parent.index * 2 + 2);
+                const right = this.getNode(this.getRightChildIndex(parent.index));
                 new_line.push(right);
             }
             if (new_line.length)  {
@@ -35,6 +67,26 @@ class BinaryHeap {
         }
 
         return tree;
+    }
+
+    public heapify(index: number = 0) {
+        const left = this.getLeftChildIndex(index);
+        const right = this.getRightChildIndex(index);
+
+        let largest = index;
+
+        if (this.heap[left] > this.heap[largest]) {
+            largest = left;
+        }
+        
+        if (this.heap[right] > this.heap[index]) {
+            largest = right;
+        }
+
+        if (largest !== index) {
+            this.swap(index, largest);
+            this.heapify(largest);
+        }
     }
 
     public print() {
@@ -50,16 +102,7 @@ class BinaryHeap {
             console.log(print_string);
         }
     }
-
-    private getSpace(length: number): string {
-        if (!length) {
-            return ''
-        }
-
-        return new Array(length).fill(' ').join('');
-    }
 }
 
-const heap = new BinaryHeap();
+const heap = new BinaryHeap([9, 11, 20, 15, 16]);
 heap.print();
-// console.log(tree);
