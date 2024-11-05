@@ -37,6 +37,39 @@ class Graph {
             }
         }
     }
+
+    public dfsIterative() {
+        const visited = new Set();
+        const stack = [this.start_node];
+        
+        while(stack.length > 0) {
+            const node = stack.pop();
+
+            if (node && !visited.has(node.value)) {
+                console.log(node.value);
+                visited.add(node.value);
+
+                for (let i = 0; i < node.neighbors.length; i++) {
+                    if (!visited.has(node.neighbors[i].value)) {
+                        stack.push(node.neighbors[i]);
+                    }
+                }
+            }
+        }
+    }
+
+    public dfsRecursive(node = this.start_node, visited = new Set()) {
+        if (visited.has(node.value)) {
+            return;
+        }
+
+        console.log(node.value);
+        visited.add(node.value);
+
+        for (let i = 0; i < node.neighbors.length; i++) {
+            this.dfsRecursive(node.neighbors[i], visited)
+        }
+    }
 }
 
 
@@ -65,3 +98,7 @@ f.neighbors = [c, e];
 
 const graph = new Graph(a);
 graph.bfs();
+console.log("==================")
+graph.dfsIterative();
+console.log("==================")
+graph.dfsRecursive();
